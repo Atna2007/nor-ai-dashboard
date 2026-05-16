@@ -1,17 +1,24 @@
 "use client"
 
+export const dynamic = "force-dynamic"
+
 import * as React from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function AuthErrorPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-
-  // Extract error parameters from URL that NextAuth passes
-  const errorType = searchParams.get("error") || "unknown"
-  const errorMessage = searchParams.get("message")
+  const searchError = React.useMemo(() => {
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search)
+      return {
+        type: searchParams.get("error") || "unknown",
+        message: searchParams.get("message"),
+      }
+    }
+    return { type: "unknown", message: null }
+  }, [])
 
   const handleBackToSignIn = () => {
     router.push("/auth/login")
@@ -29,11 +36,11 @@ export default function AuthErrorPage() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <p className="text-sm font-medium">
-              Error: {errorType}
+              Error: {searchError.type}
             </p>
-            {errorMessage && (
+            {searchError.message && (
               <p className="text-sm text-muted-foreground break-all">
-                Details: {errorMessage}
+                Details: {searchError.message}
               </p>
             )}
           </div>
