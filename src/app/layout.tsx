@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description: "Modern SaaS Dashboard - Multi-tenant Analytics Platform",
   keywords: ["dashboard", "analytics", "saas", "multi-tenant"],
   authors: [{ name: "nor.ai" }],
+  verification: {
+    google: "f5c6b5af5ffc5f15",
+  },
   openGraph: {
     title: "nor.ai | Dashboard",
     description: "Modern SaaS Dashboard - Multi-tenant Analytics Platform",
